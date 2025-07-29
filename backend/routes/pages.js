@@ -1,6 +1,6 @@
 const express = require('express');
 const Page = require('../models/Page');
-const { authMiddleware, adminOnly } = require('../middleware/auth');
+const { authMiddleware, adminMiddleware } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -26,8 +26,8 @@ router.get('/:id', async (req, res) => {
 });
 
 // Create or update page (admin only)
-router.post('/', authMiddleware, adminOnly, async (req, res) => {
-  const { id, title, content, media } = req.body;
+router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
+  const { id, title, content, mediaUrl } = req.body;
   try {
     let page;
     if (id) {
@@ -35,13 +35,13 @@ router.post('/', authMiddleware, adminOnly, async (req, res) => {
       if (!page) return res.status(404).json({ message: 'Page not found' });
       page.title = title;
       page.content = content;
-      page.media = media;
+      page.mediaUrl = mediaUrl;
       await page.save();
     } else {
       page = new Page({
         title,
         content,
-        media,
+        mediaUrl,
         createdBy: req.user.id
       });
       await page.save();

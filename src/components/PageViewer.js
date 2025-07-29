@@ -1,49 +1,43 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import BackendAPI from './BackendAPI';
 
-const PageViewer = ({ pageId }) => {
+const PageViewer = () => {
+  const { id } = useParams();
   const [page, setPage] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPage = async () => {
-      setIsLoading(true);
+      setLoading(true);
       try {
-        const data = await BackendAPI.getPageContent(pageId);
+        const data = await BackendAPI.fetchPageById(id);
         setPage(data);
       } catch (err) {
-        setError(err.message);
+        setError('Failed to load page');
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
     fetchPage();
-  }, [pageId]);
+  }, [id]);
 
-  if (isLoading) return <div className="container">Loading...</div>;
-  if (error) return <div className="container">Error: {error}</div>;
-  if (!page) return <div className="container">No page found.</div>;
+  if (loading) return <p>Loading page...</p>;
+  if (error) return <p>{error}</p>;
+  if (!page) return <p>Page not found</p>;
 
   return (
-    <div className="container">
-      <h2>{page.title}</h2>
-      <p>{page.content}</p>
-      <div style={{ marginTop: '2rem' }}>
-        {page.media && page.media.length > 0 ? (
-          page.media.map((url, index) => (
-            <div key={index} style={{ marginBottom: '1rem' }}>
-              {url.match(/\.(jpeg|jpg|gif|png)$/i) ? (
-                <img src={url} alt={`media-${index}`} style={{ maxWidth: '100%', height: 'auto' }} />
-              ) : (
-                <a href={url} target="_blank" rel="noopener noreferrer">{url}</a>
-              )}
-            </div>
-          ))
+    <div className="page-viewer">
+      <h1>{page.title}</h1>
+      <div dangerouslySetInnerHTML={{ __html: page.content }} />
+      {page.mediaUrl && (
+        page.mediaUrl.match(/\.(jpeg|jpg|gif|png)$/) ? (
+          <img src={page.mediaUrl} alt="Media" style={{ maxWidth: '400px' }} />
         ) : (
-          <p>No media available for this page.</p>
-        )}
-      </div>
+          <a href={page.mediaUrl} target="_blank" rel="noopener noreferrer">View Media</a>
+        )
+      )}
     </div>
   );
 };
