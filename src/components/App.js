@@ -9,6 +9,7 @@ import PageViewer from './PageViewer';
 import BackendAPI from './BackendAPI';
 
 import { FaHome, FaBook, FaUser, FaSignInAlt } from 'react-icons/fa';
+import logoPathshala from '../logo-pathshala.svg';
 
 const App = () => {
 
@@ -58,8 +59,9 @@ const App = () => {
       )}
       <header className="bg-gradient-to-r from-purple-700 via-pink-600 to-yellow-500 text-white shadow-lg transition-colors duration-500">
         <div className="container mx-auto px-6 flex items-center justify-between py-4">
-          <div className="logo text-4xl font-extrabold tracking-widest font-poppins">
-            EduLearn
+          <div className="flex items-center gap-4">
+            <img src={logoPathshala} alt="Pathshala Logo" className="h-12 w-12 rounded-xl shadow-lg" />
+            <span className="text-5xl font-extrabold tracking-widest font-[Merriweather] text-white drop-shadow-lg" style={{fontFamily: 'Merriweather, Poppins, serif'}}>Pathshala</span>
           </div>
           <nav>
             <ul className="flex space-x-8">
