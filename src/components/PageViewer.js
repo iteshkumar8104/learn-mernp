@@ -28,14 +28,14 @@ const PageViewer = () => {
   if (!page) return <p>Page not found</p>;
 
   return (
-    <div className="page-viewer">
-      <h1>{page.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: page.content }} />
+    <div className="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto mt-8">
+      <h1 className="text-3xl font-bold mb-6 text-purple-700 font-poppins">{page.title}</h1>
+      <div className="mb-6 prose max-w-none" dangerouslySetInnerHTML={{ __html: page.content }} />
       {page.mediaUrl && (
         page.mediaUrl.match(/\.(jpeg|jpg|gif|png)$/) ? (
-          <img src={page.mediaUrl} alt="Media" style={{ maxWidth: '400px' }} />
+          <img src={page.mediaUrl} alt="Media" className="max-w-[400px] rounded-lg shadow-md mb-4" />
         ) : (
-          <a href={page.mediaUrl} target="_blank" rel="noopener noreferrer">View Media</a>
+          <a href={page.mediaUrl} target="_blank" rel="noopener noreferrer" className="text-purple-700 underline">View Media</a>
         )
       )}
     </div>
