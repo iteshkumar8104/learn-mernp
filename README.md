@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # EduLearn MERN Application
 
 This is a basic MERN (MongoDB, Express, React, Node.js) educational application with user and admin roles. It supports content pages with media upload.
@@ -75,3 +76,7 @@ For deployment, you can use platforms like Heroku (backend) and Vercel (frontend
 ## License
 
 MIT License
+=======
+# edulearn-mern
+--
+>>>>>>> f6264f6433d5906b7e90fb2b2d6e91387927b768
