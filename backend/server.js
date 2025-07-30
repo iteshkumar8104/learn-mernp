@@ -22,7 +22,7 @@ app.use('/api/pages', pageRoutes);
 app.use('/api/upload', uploadRoutes);
 
 // MongoDB connection
-const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/edulearn';
+const mongoURI = process.env.MONGODB_URI || process.env.MONGO_URI || 'mongodb://localhost:27017/edulearn';
 
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
