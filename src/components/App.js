@@ -11,13 +11,6 @@ import BackendAPI from './BackendAPI';
 import { FaHome, FaBook, FaUser, FaSignInAlt } from 'react-icons/fa';
 
 const App = () => {
-  // Debug: expose Cypress detection and location for troubleshooting
-  let cypressDebug = '';
-  if (typeof window !== 'undefined') {
-    cypressDebug = `window.Cypress: ${window.Cypress} | window.location.search: ${window.location.search}`;
-  }
-  // Cypress test mode detection
-  const isCypress = typeof window !== 'undefined' && (window.Cypress === true || window.location.search.includes('cypressTest=1'));
 
   const [currentUser, setCurrentUser] = useState(() => {
     const stored = localStorage.getItem('user');
@@ -44,18 +37,10 @@ const App = () => {
     }, 1500);
   };
 
-  useEffect(() => {
-    if (isCypress && currentUser && window.location.pathname === '/login') {
-      console.log('[App] Cypress detected: redirecting to /dashboard');
-      window.location.assign('/dashboard');
-    }
-  }, [isCypress, currentUser]);
+  // ...existing code...
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-r from-purple-400 via-pink-300 to-yellow-200 font-sans text-gray-900 transition-colors duration-500">
-      <div style={{ background: '#fffae6', color: '#b45309', padding: '6px', fontSize: '14px', fontWeight: 'bold', textAlign: 'center', zIndex: 9999 }}>
-        CYPRESS DEBUG: {cypressDebug}
-      </div>
       {showNotification && (
         <motion.div
           className={`notification show`}
